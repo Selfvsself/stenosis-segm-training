@@ -1,0 +1,12 @@
+opencv-python==4.7.0.68
+numpy
+matplotlib
+scikit-learn
+pandas
+scikit-image
+tensorflow
+Pillow
+ultralytics==8.0.203
+torch
+torchvision
+torchaudio
