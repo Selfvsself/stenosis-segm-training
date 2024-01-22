@@ -1,13 +1,11 @@
+import math
 import uuid
 
+import cv2
 import numpy as np
 import tensorflow
-from PIL import Image, ImageDraw, ImageFont
+from PIL import Image
 from tensorflow.keras.models import load_model
-from ultralytics import YOLO
-import cv2
-import math
-
 
 MODEL_UNET = load_model('models/model_unet_final.h5')
 
@@ -65,9 +63,9 @@ def segm_unet(img_path, pixel_spacing):
     image_segm.save(file_name_semg)
 
     disk_area = cv2.countNonZero(binary_image1)
-    disk_area = float(disk_area) * (pixel_spacing**2)
+    disk_area = float(disk_area) * (pixel_spacing ** 2)
     canal_area = cv2.countNonZero(binary_image2)
-    canal_area = float(canal_area) * (pixel_spacing**2)
+    canal_area = float(canal_area) * (pixel_spacing ** 2)
     div_area = -1
     if disk_area > 0 and canal_area > 0:
         div_area = math.sqrt(float(canal_area) / float(disk_area))
@@ -162,10 +160,10 @@ def segm_unet(img_path, pixel_spacing):
             font_scale = font_scale - 0.05
             text_size, _ = cv2.getTextSize(text, font, font_scale, text_thickness)
         w1 = x2 + 25
-        h1 = int(end_dist_canal_point[1] - (text_height - text_size[1])/2) - 1
+        h1 = int(end_dist_canal_point[1] - (text_height - text_size[1]) / 2) - 1
         text_origin = (w1, h1)
-        cv2.putText(image, text, text_origin, font, font_scale, text_color, text_thickness)\
-
+        cv2.putText(image, text, text_origin, font, font_scale, text_color, text_thickness) \
+ \
         text = "{:.4f}".format(canal_area)
         text_size, _ = cv2.getTextSize(text, font, font_scale, text_thickness)
         h2 = int(h1 / 2)
@@ -194,7 +192,7 @@ def segm_unet(img_path, pixel_spacing):
         text_size, _ = cv2.getTextSize(text, font, font_scale, text_thickness)
         y_avg = max(start_disk_point[1], end_disk_dist_point[1]) - min(start_disk_point[1], end_disk_dist_point[1])
         w1 = x1 - 25 - text_size[0]
-        h1 = int(end_disk_dist_point[1] - y_avg/2 + text_size[1]/2)
+        h1 = int(end_disk_dist_point[1] - y_avg / 2 + text_size[1] / 2)
         text_origin = (w1, h1)
         cv2.putText(image, text, text_origin, font, font_scale, text_color, text_thickness)
 

@@ -1,7 +1,3 @@
-import os
-import uuid
-import numpy as np
-import tensorflow
 from PIL import Image, ImageDraw
 from ultralytics import YOLO
 
